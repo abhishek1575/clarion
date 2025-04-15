@@ -2,7 +2,7 @@ import { useState } from "react";
 import { updateProduct, deleteProduct } from "../services/productServices"; // Import delete function
 import { X } from "lucide-react";
 
-export default function ProductDetail({ product, onClose, onUpdate }) {
+export default function ProductDetail({ product, onClose, onUpdate, fetchProducts }) {
   const [formData, setFormData] = useState({
     name: product.name,
     description: product.description || "",
@@ -33,7 +33,7 @@ export default function ProductDetail({ product, onClose, onUpdate }) {
 
       // ✅ Update the product list without refreshing
       onUpdate(formData); // Pass updated product details
-
+      fetchProducts(); // Fetch updated product list
       onClose(); // Close the modal after update
     } catch (error) {
       console.error("Update failed:", error);
@@ -53,7 +53,7 @@ export default function ProductDetail({ product, onClose, onUpdate }) {
 
         // ✅ Remove the product from UI without refresh
         onUpdate(null); // Notify parent to remove product
-
+        fetchProducts(); // Fetch updated product list
         alert("Product deleted successfully!");
         onClose(); // Close modal after deletion
       } catch (error) {

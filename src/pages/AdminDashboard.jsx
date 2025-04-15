@@ -1,40 +1,37 @@
-import { useState } from "react";
+// AdminDashboard.jsx
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import HomePage from "./Home";
-import ProductTable from "../components/ProductTable";
-import UserMangement from "../components/UserManagment";
+import { useEffect } from "react";
 
 export default function AdminDashboard() {
-  const [activeSection, setActiveSection] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Redirect to /admin/home if someone visits /admin directly
+    if (location.pathname === "/admin") {
+      navigate("/admin/home", { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-br from-gray-100 to-gray-300">
+    <div className="h-screen w-full flex flex-col bg-gradient-to-br from-gray-100 to-gray-300">
       {/* Navbar */}
-      <Navbar />
+      <div className="h-16">
+        <Navbar />
+      </div>
 
-      {/* Sidebar & Main Content */}
-      <div className="flex flex-1 h-[calc(100vh-4rem)] overflow-hidden">
-        {/* Sidebar */}
-        <Sidebar
-          onSelectSection={setActiveSection}
-          activeSection={activeSection}
-        />
-
-        {/* Main Content */}
+      {/* Sidebar and Dynamic Content Area */}
+      <div className="flex flex-1 overflow-hidden h-[calc(100vh-4rem)]">
+        <Sidebar />
         <main className="flex-1 overflow-y-auto p-6">
-          {activeSection === "home" && <HomePage />}
-          {activeSection === "product" && <ProductTable />}
-          {activeSection === "customers" && <UserMangement />}
-          {activeSection === "orders" && (
-            <h1 className="text-2xl font-bold">Order Summary</h1>
-          )}
+          <Outlet />
         </main>
       </div>
     </div>
   );
 }
-
 
 // import { useState } from "react";
 // import Navbar from "../components/Navbar";

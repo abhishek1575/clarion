@@ -139,10 +139,12 @@
 // }
 
 // components/AddProductModal.jsx
+
+
 import { useState } from "react";
 import { addProduct } from "../services/productServices";
 
-export default function AddProductModal({ isOpen, onClose, onProductAdded }) {
+export default function AddProductModal({ isOpen, onClose, onProductAdded, fetchProducts }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -164,6 +166,7 @@ export default function AddProductModal({ isOpen, onClose, onProductAdded }) {
     try {
       const newProduct = await addProduct(formData, token);
       onProductAdded(newProduct); // Update product list
+      fetchProducts(); // Fetch updated product list
       onClose(); // Close modal
     } catch (error) {
       console.error("Failed to add product");

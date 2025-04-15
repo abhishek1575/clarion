@@ -12,14 +12,25 @@ export default function ProductTable() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [stockFilter, setStockFilter] = useState("");
 
+  const fetchProducts = async () => {
+    const token = sessionStorage.getItem("access_token");
+    const data = await getAllProducts(token);
+    setProducts(data);
+  };
+
+  // Use it in useEffect for initial load
   useEffect(() => {
-    async function fetchProducts() {
-      const token = sessionStorage.getItem("access_token");
-      const data = await getAllProducts(token);
-      setProducts(data);
-    }
     fetchProducts();
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     const token = sessionStorage.getItem("access_token");
+  //     const data = await getAllProducts(token);
+  //     setProducts(data);
+  //   }
+  //   fetchProducts();
+  // }, []);
 
   const getStockStatus = (stock) => {
     if (stock <= 0) return { text: "Out of Stock", color: "text-red-600" };
@@ -134,7 +145,7 @@ export default function ProductTable() {
                     <div className="w-24 h-24 bg-gray-100 flex items-center justify-center overflow-hidden rounded-lg shadow-md">
                       {product.image_url ? (
                         <img
-                          src={`http://127.0.0.1:5000${product.image_url}`}
+                          src={`http://172.25.10.26:5000/${product.image_url}`}
                           alt={product.name}
                           className="w-full h-full object-contain"
                         />
@@ -166,7 +177,7 @@ export default function ProductTable() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onUpdate={handleProductUpdate}
-          fetchProducts={() => {}}
+          fetchProducts={fetchProducts}
         />
       )}
 
@@ -174,7 +185,7 @@ export default function ProductTable() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onProductAdded={handleProductAdded}
-        fetchProducts={() => {}}
+        fetchProducts={fetchProducts}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 export const fetchAllUsers = async (token) => {
-  const response = await fetch("http://127.0.0.1:5000/admin/users", {
+  const response = await fetch("http://172.25.10.26:5000/admin/users", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -15,7 +15,7 @@ export const fetchAllUsers = async (token) => {
 
 export const updateUserStatus = async (userId, isActive, token) => {
   const response = await fetch(
-    `http://127.0.0.1:5000/admin/users/${userId}/status`,
+    `http://172.25.10.26:5000/admin/users/${userId}/status`,
     {
       method: "PUT",
       headers: {
