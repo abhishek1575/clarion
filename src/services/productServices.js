@@ -4,20 +4,20 @@ const API_BASE = "http://172.25.10.26:5000/api";
 
 export const getAllProducts = async (token) => {
   const response = await fetch(`${API_BASE}/get_all_products`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  
-    console.log("Product image URL:", response.image_url);
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log("Product image URL:", response.image_url);
   if (!response.ok) throw new Error("Failed to fetch products");
   return response.json();
 };
 
 export const updateProduct = async (id, data, token) => {
   console.log("Update product data:", data, id, token);
-  const response = await fetch(`${API_BASE}/products/${id}`, {
+  const response = await fetch(`${API_BASE}/update_product/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,6 @@ export async function deleteProduct(productId, token) {
 
   return response.json();
 }
-
 
 export async function addProduct(productData, token) {
   console.log("Adding product:", productData, token);
@@ -89,7 +88,6 @@ export async function addProduct(productData, token) {
     throw error;
   }
 }
-
 
 // export async function addProduct(productData, token) {
 //   console.log("Adding product:", productData, token);

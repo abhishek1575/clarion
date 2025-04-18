@@ -133,7 +133,7 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
               <option value="">Select Category</option>
               <option value="Vegetable">Vegetable</option>
               <option value="Fruit">Fruit</option>
-              <option value="Jxuice">Juice</option>
+              <option value="Juice">Juice</option>
             </select>
           </div>
 
