@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { updateProduct, deleteProduct } from "../services/productServices"; // Import delete function
+import { updateProduct, deleteProduct } from "../services/productServices";
 import { X } from "lucide-react";
 
-export default function ProductDetail({ product, onClose, onUpdate, fetchProducts }) {
+export default function ProductDetail({
+  product,
+  onClose,
+  onUpdate,
+  fetchProducts,
+}) {
   const [formData, setFormData] = useState({
     name: product.name,
     description: product.description || "",
@@ -10,18 +15,28 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
     unit: product.unit,
     category: product.category,
     image_url: product.image_url || "",
-    stock: product.stock, // ✅ Added stock field
+    stock: product.stock,
+    image: null, // 🆕 file object will be stored here
   });
 
-  // Compute availability status dynamically
   const isAvailable = formData.stock > 0 ? "Available" : "Out of Stock";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "stock" ? parseInt(value, 10) || 0 : value, // Convert stock to number
+      [name]: name === "stock" ? parseInt(value, 10) || 0 : value,
     }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prev) => ({
+        ...prev,
+        image: file,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -30,11 +45,11 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
 
     try {
       await updateProduct(product.id, formData, token);
+      console.log("Product updated successfully:", formData);
 
-      // ✅ Update the product list without refreshing
-      onUpdate(formData); // Pass updated product details
-      fetchProducts(); // Fetch updated product list
-      onClose(); // Close the modal after update
+      onUpdate(formData);
+      fetchProducts();
+      onClose();
     } catch (error) {
       console.error("Update failed:", error);
       alert("Failed to update product.");
@@ -50,12 +65,10 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
     if (confirmDelete) {
       try {
         await deleteProduct(product.id, token);
-
-        // ✅ Remove the product from UI without refresh
-        onUpdate(null); // Notify parent to remove product
-        fetchProducts(); // Fetch updated product list
+        onUpdate(null);
+        fetchProducts();
         alert("Product deleted successfully!");
-        onClose(); // Close modal after deletion
+        onClose();
       } catch (error) {
         console.error("Error deleting product:", error);
         alert("Failed to delete product.");
@@ -137,13 +150,16 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
             </select>
           </div>
 
+         
+          {/* ✅ File input instead of Image URL */}
           <div>
-            <label className="block text-sm font-medium">Image URL</label>
+            <label className="block text-sm font-medium">
+              Choose New Image
+            </label>
             <input
-              type="text"
-              name="image_url"
-              value={formData.image_url}
-              onChange={handleChange}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
               className="w-full mt-1 p-2 border rounded"
             />
           </div>
@@ -160,7 +176,6 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
             />
           </div>
 
-          {/* Buttons: Side by Side */}
           <div className="col-span-2 flex gap-4 justify-center mt-4">
             <button
               type="submit"
@@ -182,4 +197,3 @@ export default function ProductDetail({ product, onClose, onUpdate, fetchProduct
     </div>
   );
 }
-

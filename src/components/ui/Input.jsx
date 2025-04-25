@@ -1,14 +1,13 @@
+// components/ui/input.jsx
 import React from "react";
 
-// Input component for form fields
-export function Input({ value, onChange, placeholder, className = "" }) {
-  return (
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={`border p-2 rounded-md ${className}`}
-    />
-  );
-}
+export const Input = ({ value, onChange, placeholder, className = "" }) => (
+  <input
+    type="text"
+    value={value}
+    onChange={onChange}
+    placeholder={placeholder}
+    className={`border rounded-xl px-4 py-2 text-sm w-full ${className}`}
+  />
+);
+

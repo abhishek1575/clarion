@@ -1,6 +1,6 @@
 // services/productService.js
-
-const API_BASE = "http://172.25.10.26:5000/api";
+import { API_URL } from "../config";
+const API_BASE = `${API_URL}/product`;
 
 export const getAllProducts = async (token) => {
   const response = await fetch(`${API_BASE}/get_all_products`, {
@@ -10,20 +10,32 @@ export const getAllProducts = async (token) => {
     },
   });
 
-  console.log("Product image URL:", response.image_url);
   if (!response.ok) throw new Error("Failed to fetch products");
   return response.json();
 };
 
 export const updateProduct = async (id, data, token) => {
   console.log("Update product data:", data, id, token);
+
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("description", data.description || "");
+  formData.append("price", data.price);
+  formData.append("unit", data.unit);
+  formData.append("stock", data.stock);
+  formData.append("category", data.category);
+
+  if (data.image instanceof File) {
+    formData.append("image", data.image); // only append if file is provided
+  }
+
   const response = await fetch(`${API_BASE}/update_product/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      // DO NOT set 'Content-Type': Let the browser handle it (important for FormData)
     },
-    body: JSON.stringify(data),
+    body: formData,
   });
 
   if (!response.ok) {
@@ -35,8 +47,29 @@ export const updateProduct = async (id, data, token) => {
   return response.json();
 };
 
+
+// export const updateProduct = async (id, data, token) => {
+//   console.log("Update product data:", data, id, token);
+//   const response = await fetch(`${API_BASE}/update_product/${id}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify(data),
+//   });
+
+//   if (!response.ok) {
+//     const error = await response.text();
+//     console.error("Update failed:", error);
+//     throw new Error("Failed to update product");
+//   }
+
+//   return response.json();
+// };
+
 export async function deleteProduct(productId, token) {
-  const response = await fetch(`${API_BASE}/products/${productId}`, {
+  const response = await fetch(`${API_BASE}/delete_product/${productId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +101,7 @@ export async function addProduct(productData, token) {
   }
 
   try {
-    const response = await fetch(`${API_BASE}/add_products`, {
+    const response = await fetch(`${API_BASE}/add_product`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -88,26 +121,3 @@ export async function addProduct(productData, token) {
     throw error;
   }
 }
-
-// export async function addProduct(productData, token) {
-//   console.log("Adding product:", productData, token);
-//   try {
-//     const response = await fetch(`${API_BASE}/add_products`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify(productData),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to add product");
-//     }
-
-//     return await response.json();
-//   } catch (error) {
-//     console.error("Error adding product:", error);
-//     throw error;
-//   }
-// }

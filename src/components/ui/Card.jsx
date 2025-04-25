@@ -1,12 +1,9 @@
 import React from "react";
 
-// Card component to display content in a styled box
-export function Card({ children, className = "" }) {
-  return (
-    <div
-      className={`bg-white shadow-xl rounded-lg p-4 ${className}`} // Tailwind CSS for styling
-    >
-      {children}
-    </div>
-  );
-}
+export const Card = ({ children, className = "" }) => (
+  <div className={`rounded-2xl border bg-white ${className}`}>{children}</div>
+);
+
+export const CardContent = ({ children, className = "" }) => (
+  <div className={`p-4 ${className}`}>{children}</div>
+);
