@@ -50,6 +50,13 @@ export default function Sidebar() {
           path="/admin/orders"
           isActive={pathname === "/admin/orders"}
         />
+
+        <SidebarButton
+          icon={FileText}
+          label="Runner Table"
+          path="/admin/delivery"
+          isActive={pathname === "/admin/delivery"}
+        />
       </div>
 
       <div className="text-sm text-gray-500 border-t pt-4 mt-auto">

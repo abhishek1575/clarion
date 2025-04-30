@@ -26,7 +26,17 @@ export const getOrderDetailsById = async (orderId) => {
       },
     });
     return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch order details: " + error.message);
+  }  catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error response:', error.response);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error request:', error.request);
+    } else {
+      // Something else caused the error
+      console.error('Error message:', error.message);
+    }
+    throw error;
   }
 };

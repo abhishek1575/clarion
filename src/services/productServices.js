@@ -1,6 +1,7 @@
 // services/productService.js
 import { API_URL } from "../config";
-const API_BASE = `${API_URL}/product`;
+// const API_BASE = `${API_URL}/product`;
+const API_BASE = `${API_URL}/api`;
 
 export const getAllProducts = async (token) => {
   const response = await fetch(`${API_BASE}/get_all_products`, {
@@ -47,26 +48,6 @@ export const updateProduct = async (id, data, token) => {
   return response.json();
 };
 
-
-// export const updateProduct = async (id, data, token) => {
-//   console.log("Update product data:", data, id, token);
-//   const response = await fetch(`${API_BASE}/update_product/${id}`, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//     body: JSON.stringify(data),
-//   });
-
-//   if (!response.ok) {
-//     const error = await response.text();
-//     console.error("Update failed:", error);
-//     throw new Error("Failed to update product");
-//   }
-
-//   return response.json();
-// };
 
 export async function deleteProduct(productId, token) {
   const response = await fetch(`${API_BASE}/delete_product/${productId}`, {

@@ -1,64 +1,3 @@
-// // --- DeliveryBoyModal.jsx ---
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import { Button } from "../components/ui/index";
-
-// const DeliveryBoyModal = ({ onClose, onSelect }) => {
-//   const [deliveryBoys, setDeliveryBoys] = useState([]);
-
-//   useEffect(() => {
-//     fetchDeliveryBoys();
-//   }, []);
-
-//   const fetchDeliveryBoys = async () => {
-//     const token = sessionStorage.getItem("token");
-//     try {
-//       const res = await axios.get(
-//         "http://127.0.0.1:5000/runner/get_runner_list",
-//         {
-//           headers: { Authorization: `Bearer ${token}` },
-//         }
-//       );
-//       const freeBoys = res.data.filter((boy) => !boy.engaged);
-//       setDeliveryBoys(freeBoys);
-//     } catch (error) {
-//       console.error("Failed to fetch delivery boys:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-//       <div className="bg-white rounded-lg p-6 w-full max-w-md">
-//         <h2 className="text-lg font-bold mb-4">Select a Free Delivery Boy</h2>
-//         {deliveryBoys.length > 0 ? (
-//           <ul className="space-y-2">
-//             {deliveryBoys.map((boy) => (
-//               <li
-//                 key={boy.id}
-//                 className="border p-2 rounded hover:bg-gray-100 cursor-pointer"
-//                 onClick={() => onSelect(boy.id)}
-//               >
-//                 <p className="font-medium">{boy.name}</p>
-//                 <p className="text-sm text-gray-600">{boy.phone}</p>
-//               </li>
-//             ))}
-//           </ul>
-//         ) : (
-//           <p className="text-gray-500">No free delivery boys available.</p>
-//         )}
-//         <Button
-//           onClick={onClose}
-//           className="mt-4 w-full bg-red-500 hover:bg-red-600"
-//         >
-//           Close
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export { DeliveryBoyModal };
-
 // components/DeliveryBoyModal.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -96,6 +35,8 @@ const DeliveryBoyModal = ({ orderId, onClose, onAssigned }) => {
   const assignDeliveryBoy = async (deliveryBoyId) => {
     try {
       const token = sessionStorage.getItem("access_token");
+
+      // Step 1: Assign the delivery boy
       await axios.post(
         `${API_URL}/runner/assign`,
         {
@@ -109,12 +50,54 @@ const DeliveryBoyModal = ({ orderId, onClose, onAssigned }) => {
           },
         }
       );
+
+      // Step 2: Update the order status to "Out_for_delivery"
+      await axios.put(
+        `${API_URL}/orders/${orderId}/status`,
+        {
+          status: "Out_for_delivery",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // After successful operations
       onAssigned();
       onClose();
     } catch (error) {
-      console.error("Error assigning delivery boy:", error);
+      console.error(
+        "Error assigning delivery boy or updating order status:",
+        error
+      );
     }
   };
+
+  // const assignDeliveryBoy = async (deliveryBoyId) => {
+  //   try {
+  //     const token = sessionStorage.getItem("access_token");
+  //     await axios.post(
+  //       `${API_URL}/runner/assign`,
+  //       {
+  //         order_id: orderId,
+  //         runner_id: deliveryBoyId,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     onAssigned();
+  //     onClose();
+  //   } catch (error) {
+  //     console.error("Error assigning delivery boy:", error);
+  //   }
+  // };
 
 
   return (
@@ -150,4 +133,3 @@ const DeliveryBoyModal = ({ orderId, onClose, onAssigned }) => {
   );
 };
 export { DeliveryBoyModal };
-// export default DeliveryBoyModal;

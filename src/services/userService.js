@@ -2,7 +2,6 @@ import { API_URL } from "../config";
 
 
 export const fetchAllUsers = async (token) => {
-  // const response = await fetch("http://172.25.10.26:5000/admin/users", {
     const response = await fetch(`${API_URL}/admin/users`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -19,7 +18,6 @@ export const fetchAllUsers = async (token) => {
 
 export const updateUserStatus = async (userId, isActive, token) => {
   const response = await fetch(
-    // `http://172.25.10.26:5000/admin/users/${userId}/status`,
     `${API_URL}/admin/users/${userId}/status`,  
     {
       method: "PUT",

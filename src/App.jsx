@@ -14,7 +14,8 @@ import User from "./pages/user";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductTable from "./components/ProductTable";
 import UserManagment from "./components/UserManagment";
-import AdminOrderDeliveryDashboard from "./pages/OrderDashboard";
+import AdminOrderDeliveryDashboard from "./pages/OrderSummary";
+import RunnerTable from "./pages/RunnerTable";
 
 function AppContent() {
   const location = useLocation();
@@ -33,10 +34,9 @@ function AppContent() {
             <Route path="home" element={<Home />} />
             <Route path="products" element={<ProductTable />} />
             <Route path="customers" element={<UserManagment />} />
-            <Route
-              path="orders" element={<AdminOrderDeliveryDashboard/>}
-              // element={<h1 className="text-2xl font-bold">Order Summary</h1>}
+            <Route path="orders" element={<AdminOrderDeliveryDashboard />} // element={<h1 className="text-2xl font-bold">Order Summary</h1>}
             />
+            <Route path="delivery" element={<RunnerTable />} />
           </Route>
 
           {/* Other user-facing routes (optional) */}
@@ -60,4 +60,3 @@ function App() {
 }
 
 export default App;
-

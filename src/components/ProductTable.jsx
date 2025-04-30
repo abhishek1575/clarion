@@ -137,7 +137,6 @@ export default function ProductTable() {
                     <div className="w-24 h-24 bg-gray-100 flex items-center justify-center overflow-hidden rounded-lg shadow-md">
                       {product.image_url ? (
                         <img
-                          // src={`http://172.25.10.26:5000/${product.image_url}`}
                           src={`${API_URL}${product.image_url}`}
                           alt={product.name}
                           className="w-full h-full object-contain"  
