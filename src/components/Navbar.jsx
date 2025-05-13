@@ -46,15 +46,15 @@ function Navbar() {
             Clarion
           </Link>
           <div className="flex items-center space-x-6">
-            <Link to="/products" className="text-gray-600 hover:text-primary">
+            {/* <Link to="/products" className="text-gray-600 hover:text-primary">
               Products
-            </Link>
-            <Link to="/cart" className="relative">
+            </Link> */}
+            {/* <Link to="/cart" className="relative">
               <FaShoppingCart className="text-2xl text-gray-600 hover:text-primary" />
               <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                 0
               </span>
-            </Link>
+            </Link> */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}
@@ -65,20 +65,20 @@ function Navbar() {
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-10">
-                  <Link
+                  {/* <Link
                     to="/user"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     onClick={() => setDropdownOpen(false)}
                   >
                     User Profile
-                  </Link>
-                  <Link
+                  </Link> */}
+                  {/* <Link
                     to="/password-change"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     onClick={() => setDropdownOpen(false)}
                   >
                     Password Change
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={confirmLogout}
                     className="w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-200"
@@ -96,30 +96,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-// import { Bell, User } from "lucide-react";
-
-// export default function Navbar() {
-//   return (
-//     <nav className="bg-white shadow-md py-4 px-6 flex justify-between items-center w-full flex-shrink-0">
-//       <span className="text-2xl font-bold text-blue-700">Clarion</span>
-//       <div className="flex items-center gap-4">
-//         <Bell className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-700 transition-colors duration-300" />
-//         <User className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-700 transition-colors duration-300" />
-//       </div>
-//     </nav>
-//   );
-// }
-
-// import { Bell, User } from "lucide-react";
-// export default function Navbar() {
-//   return (
-//     <nav className="bg-white shadow-md py-4 px-6 flex justify-between items-center w-full">
-//       <span className="text-2xl font-bold text-blue-700">Clarion</span>
-//       <div className="flex items-center gap-4">
-//         <Bell className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-700 transition-colors duration-300" />
-//         <User className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-700 transition-colors duration-300" />
-//       </div>
-//     </nav>
-//   );
-// }

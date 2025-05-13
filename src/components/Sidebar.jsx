@@ -26,12 +26,12 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-white shadow-lg p-4 flex flex-col h-full">
       <div className="flex flex-col gap-4 flex-grow">
-        <SidebarButton
+        {/* <SidebarButton
           icon={Home}
           label="Dashboard"
           path="/admin/home"
           isActive={pathname === "/admin/home"}
-        />
+        /> */}
         <SidebarButton
           icon={Package}
           label="Product"

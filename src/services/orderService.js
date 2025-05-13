@@ -20,22 +20,23 @@ export const getAllOrders = async () => {
 
 export const getOrderDetailsById = async (orderId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/orders/${orderId}`, {
+    // const response = await axios.get(`${BASE_URL}/orders/${orderId}`, {
+    const response = await axios.get(`${BASE_URL}/orders/order/${orderId}`, { //ak
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
-  }  catch (error) {
+  } catch (error) {
     if (error.response) {
       // Server responded with a status other than 2xx
-      console.error('Error response:', error.response);
+      console.error("Error response:", error.response);
     } else if (error.request) {
       // Request was made but no response received
-      console.error('Error request:', error.request);
+      console.error("Error request:", error.request);
     } else {
       // Something else caused the error
-      console.error('Error message:', error.message);
+      console.error("Error message:", error.message);
     }
     throw error;
   }

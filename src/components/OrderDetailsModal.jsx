@@ -4,7 +4,7 @@ import { Button } from "./ui/Button";
 
 const OrderDetailsModal = ({ order, onClose }) => {
   if (!order) return null;
-
+  console.log("Order Details Modal", order);
   const address = order.address || {};
   const deliveryBoy = order.delivery_boy || {};
 
@@ -24,12 +24,12 @@ const OrderDetailsModal = ({ order, onClose }) => {
             <p>
               <strong>Name:</strong> {order.user?.name}
             </p>
-            <p>
+             <p>
               <strong>Email:</strong> {order.user?.email}
             </p>
             <p>
               <strong>Phone:</strong> {order.user?.phone}
-            </p>
+            </p> 
           </div>
           <div>
             <h3 className="text-lg font-semibold text-blue-700 mb-1">

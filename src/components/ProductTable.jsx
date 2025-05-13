@@ -47,9 +47,15 @@ export default function ProductTable() {
     setSelectedProduct(null);
   };
 
-  const handleProductAdded = (newProduct) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  // const handleProductAdded = (newProduct) => {
+  //   setProducts((prevProducts) => [...prevProducts, newProduct]);
+  // };
+
+  const handleProductAdded = async () => {
+    await fetchProducts(); // Reload latest products from server
+    setIsAddModalOpen(false); // Close modal from parent
   };
+  
    
   const filteredProducts = products.filter((product) => {
     const stockStatus = getStockStatus(product.stock).text.toLowerCase();
@@ -177,7 +183,7 @@ export default function ProductTable() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onProductAdded={handleProductAdded}
-        fetchProducts={fetchProducts}
+        
       />
     </div>
   );

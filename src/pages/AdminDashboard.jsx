@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     // Redirect to /admin/home if someone visits /admin directly
     if (location.pathname === "/admin") {
-      navigate("/admin/home", { replace: true });
+      navigate("/admin/products", { replace: true });
     }
   }, [location.pathname, navigate]);
 

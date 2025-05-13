@@ -144,9 +144,9 @@ export default function ProductDetail({
               required
             >
               <option value="">Select Category</option>
-              <option value="Vegetable">Vegetable</option>
-              <option value="Fruit">Fruit</option>
-              <option value="Juice">Juice</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Fruits">Fruits</option>
+              <option value="Dairy">Dairy</option>
             </select>
           </div>
 
